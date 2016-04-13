@@ -15,7 +15,7 @@ monolog:
     logfile: ../app/logs/log
 twig:
     path:
-        - /src/SilexBase/views
+        - /src/YourProject/views
 ```
 
 Create app/logs dir
@@ -80,7 +80,7 @@ In web/index.php
 require_once __DIR__.'/../vendor/autoload.php';
 
 use SilexBase\Application;
-use React\Controller\FrontController;
+use YourProject\Controller\FrontController;
 
 $app = new Application();
 
