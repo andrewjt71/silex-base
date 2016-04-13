@@ -35,6 +35,6 @@ class Application extends SilexApplication
      */
     public function getRootDir()
     {
-        return realpath(__DIR__ . '/../..');
+        return realpath(__DIR__ . '/../../../../..');
     }
 }
