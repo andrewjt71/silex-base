@@ -7,7 +7,7 @@ Base skeleton for a Silex Application
 ### Usage ###
 
 ```
-composer require andrewjt71/silex-base-minimal
+composer require andrewjt71/silex-base
 ```
 In app/config/config.yml
 ```
