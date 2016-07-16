@@ -28,7 +28,9 @@ class ConfigServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $configFilesDir    = $app->getConfigDir();
-        $genericConfigFile = $configFilesDir . '/config.yml';
+
+        $env = getenv('APP_ENV') ?: 'dev';
+        $genericConfigFile = $configFilesDir . "/config_$env.yml";
 
         $app['config'] = $this->parser->parse(file_get_contents($genericConfigFile));
     }
