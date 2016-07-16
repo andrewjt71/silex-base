@@ -4,34 +4,28 @@ namespace SilexBase\Provider;
 
 use Silex\Application;
 use Silex\Provider\TwigServiceProvider as TwigProvider;
-use Silex\ServiceProviderInterface;
+use Pimple\ServiceProviderInterface;
+use Pimple\Container;
 
 class TwigServiceProvider implements ServiceProviderInterface
 {
     /**
      * {@inheritDoc}
      */
-    public function register(Application $app)
+    public function register(Container $container)
     {
         $options = array();
 
         $twigPaths = [];
-        foreach ($app['config']['twig']['path'] as $path) {
-            $twigPaths[] = $app->getRootDir() . $path;
+        foreach ($container['config']['twig']['path'] as $path) {
+            $twigPaths[] = $container->getRootDir() . $path;
         }
 
-        $app->register(
+        $container->register(
             new TwigProvider(),
             array(
                 'twig.path' => $twigPaths
             )
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function boot(Application $app)
-    {
     }
 }

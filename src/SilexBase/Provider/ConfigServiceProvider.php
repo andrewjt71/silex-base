@@ -3,8 +3,9 @@
 namespace SilexBase\Provider;
 
 use Silex\Application;
-use Silex\ServiceProviderInterface;
 use Symfony\Component\Yaml\Parser;
+use Pimple\ServiceProviderInterface;
+use Pimple\Container;
 
 class ConfigServiceProvider implements ServiceProviderInterface
 {
@@ -25,20 +26,11 @@ class ConfigServiceProvider implements ServiceProviderInterface
     /**
      * {@inheritDoc}
      */
-    public function register(Application $app)
+    public function register(Container $container)
     {
-        $configFilesDir    = $app->getConfigDir();
-
+        $configFilesDir    = $container->getConfigDir();
         $env = getenv('APP_ENV') ?: 'dev';
         $genericConfigFile = $configFilesDir . "/config_$env.yml";
-
-        $app['config'] = $this->parser->parse(file_get_contents($genericConfigFile));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function boot(Application $app)
-    {
+        $container['config'] = $this->parser->parse(file_get_contents($genericConfigFile));
     }
 }

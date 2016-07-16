@@ -4,22 +4,16 @@ namespace SilexBase\Provider;
 
 use Silex\Application;
 use Silex\Provider\ServiceControllerServiceProvider;
-use Silex\ServiceProviderInterface;
+use Pimple\ServiceProviderInterface;
+use Pimple\Container;
 
 class ControllerServiceProvider implements ServiceProviderInterface
 {
     /**
      * {@inheritDoc}
      */
-    public function register(Application $app)
+    public function register(Container $container)
     {
-        $app->register(new ServiceControllerServiceProvider());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function boot(Application $app)
-    {
+        $container->register(new ServiceControllerServiceProvider());
     }
 }
