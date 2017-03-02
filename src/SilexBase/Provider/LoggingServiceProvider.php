@@ -20,11 +20,15 @@ class LoggingServiceProvider implements ServiceProviderInterface
             $params['monolog.' . $key] = $value;
         }
 
-        $dir = dirname($container['config']['monolog']['logfile']);
+        $logFile = $container->getRootDir() . $container['config']['monolog']['logfile'];
+
+        $dir = dirname($logFile);
 
         if (!is_dir($dir)) {
             mkdir($dir, 0755, true);
         }
+
+        $params['monolog.logfile'] = $logFile;
 
         $container->register(new MonologServiceProvider(), $params);
     }
