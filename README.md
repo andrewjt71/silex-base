@@ -4,6 +4,9 @@
 
 Base skeleton for a Silex Application
 
+### Packagist ###
+https://packagist.org/packages/andrewjt71/silex-base
+
 ### Usage ###
 
 ```
