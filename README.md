@@ -15,13 +15,11 @@ composer require andrewjt71/silex-base
 In app/config/config.yml
 ```
 monolog:
-    logfile: /app/logs/log
+    logfile: app/logs/log
 twig:
     path:
         - /src/YourProject/views
 ```
-
-Create app/logs dir
 
 In src/YourProject/controller
 ```
