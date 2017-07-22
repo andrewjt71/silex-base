@@ -23,6 +23,7 @@ class ConfigServiceProvider implements ServiceProviderInterface
     {
         $this->parser = $parser;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -30,7 +31,39 @@ class ConfigServiceProvider implements ServiceProviderInterface
     {
         $configFilesDir    = $container->getConfigDir();
         $env = getenv('APP_ENV') ?: 'dev';
-        $genericConfigFile = $configFilesDir . "/config_$env.yml";
-        $container['config'] = $this->parser->parse(file_get_contents($genericConfigFile));
+        
+        // Config file.
+        $configFile = $configFilesDir . "/config_$env.yml";
+        $configFileContents = file_get_contents($configFile);
+        
+        // Parameter file.
+        $parameterFile = $configFilesDir . "/parameters.yml";
+        $parameterFileContents = file_get_contents($parameterFile);
+
+        $config = $this->createConfigFromFiles($configFileContents, $parameterFileContents);
+        $container['config'] = $config;
+    }
+
+    /**
+     * @param string $configFileContents
+     * @param string $parameterFileContents
+     *
+     * @return array
+     */
+    private function createConfigFromFiles($configFileContents, $parameterFileContents)
+    {
+        $parameters = $this->parser->parse($parameterFileContents);
+
+        $regexPatterns = [];
+        $substitutions = [];
+
+        foreach ($parameters as $key => $value) {
+            $regexPatterns[] = '/%' . $key . '%/';
+            $substitutions[] = $value;
+        }
+
+        $configString = preg_replace($regexPatterns, $substitutions, $configFileContents);
+
+        return $this->parser->parse($configString);
     }
 }
