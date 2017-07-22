@@ -12,6 +12,9 @@ use Symfony\Component\Yaml\Parser;
 
 class Application extends SilexApplication
 {
+    /**
+     * @param array $values
+     */
     public function __construct(array $values = array())
     {
         parent::__construct($values);
